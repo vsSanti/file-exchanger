@@ -19,13 +19,18 @@ const io = require('socket.io')(http);
 
 /* Handlers */
 const chatHandler = require('./handlers/socket/chat');
+const createFileHandler = require('./handlers/socket/createFile');
+const optionsHandler = require('./handlers/socket/options');
 
 /* Socket.IO */
 io.on('connection', (socket) => {
   const conn = socket.request.connection;
   console.log(`Connected! ip:port = ${conn.remoteAddress}:${conn.remotePort}`);
 
+  optionsHandler(io);
+
   chatHandler(socket, io);
+  createFileHandler(socket, io);
 });
 
 /* Log errors */
