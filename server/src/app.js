@@ -20,6 +20,7 @@ const io = require('socket.io')(http);
 /* Handlers */
 const createFileHandler = require('./handlers/socket/createFile');
 const readFileHandler = require('./handlers/socket/readFile');
+const updateFileHandler = require('./handlers/socket/updateFile');
 const optionsHandler = require('./handlers/socket/options');
 const errorHandler = require('./handlers/socket/error');
 
@@ -33,6 +34,7 @@ io.on('connection', (socket) => {
   errorHandler(socket, io);
   createFileHandler(socket, io);
   readFileHandler(socket, io);
+  updateFileHandler(socket, io);
 });
 
 /* Log errors */
