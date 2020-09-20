@@ -15,6 +15,20 @@ module.exports = (socket, io) => {
     console.log(`Creating ${fullPath}`);
 
     try {
+      if (fs.existsSync(fullPath)) {
+        throw new Error();
+      }
+    } catch (error) {
+      logsHandler(io, {
+        type: 'error',
+        message: `File ${fileName} already exists.`,
+      });
+
+      optionsHandler(io);
+      return;
+    }
+
+    try {
       fs.writeFileSync(fullPath, '');
 
       logsHandler(io, {
