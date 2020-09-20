@@ -16,7 +16,7 @@ module.exports = (socket, io) => {
 
     try {
       fs.unlinkSync(fullPathTemp);
-      fs.appendFileSync(fullPathStorage, data.buffer, 'utf8');
+      fs.writeFileSync(fullPathStorage, data.buffer, 'utf8');
 
       logsHandler(io, {
         type: 'success',

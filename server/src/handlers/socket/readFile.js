@@ -9,18 +9,27 @@ const pathToTemp = path.join(__dirname, '..', '..', '..', 'temp');
 
 module.exports = (socket, io) => {
   socket.on('read-file-solicitation', () => {
-    const originalFiles = fs.readdirSync(pathToStorage);
+    try {
+      const originalFiles = fs.readdirSync(pathToStorage);
 
-    const files = [];
-    originalFiles.forEach((fileName, i) => {
-      files.push(`${i + 1} - ${fileName}`);
-    });
+      const files = [];
+      originalFiles.forEach((fileName, i) => {
+        files.push(`${i + 1} - ${fileName}`);
+      });
 
-    logsHandler(io, {
-      message: files.join('\n'),
-    });
+      logsHandler(io, {
+        message: files.join('\n'),
+      });
 
-    io.emit('read-file-solicitation', originalFiles);
+      io.emit('read-file-solicitation', originalFiles);
+    } catch (error) {
+      logsHandler(io, {
+        type: 'error',
+        message: 'Error while reading files',
+      });
+
+      optionsHandler(io);
+    }
   });
 
   socket.on('read-file', (fileName) => {
@@ -29,33 +38,21 @@ module.exports = (socket, io) => {
 
     console.log(`Reading ${fullPathStorage}`);
 
-    fs.rename(fullPathStorage, fullPathTemp, (err) => {
-      if (err) {
-        logsHandler(io, {
-          type: 'error',
-          message: `File couldn't be read.`,
-        });
-        optionsHandler(io);
+    try {
+      fs.renameSync(fullPathStorage, fullPathTemp);
 
-        return;
-      }
-
-      fs.readFile(fullPathTemp, 'utf8', (err2, buffer) => {
-        if (err2) {
-          logsHandler(io, {
-            type: 'error',
-            message: `File couldn't be read.`,
-          });
-          optionsHandler(io);
-
-          return;
-        }
-
-        io.emit('read-file', {
-          fileName,
-          buffer,
-        });
+      const buffer = fs.readFileSync(fullPathTemp, 'utf8');
+      io.emit('read-file', {
+        fileName,
+        buffer,
       });
-    });
+    } catch (error) {
+      logsHandler(io, {
+        type: 'error',
+        message: `File couldn't be read.`,
+      });
+
+      optionsHandler(io);
+    }
   });
 };

@@ -15,20 +15,20 @@ module.exports = (socket, io) => {
     const fullPath = `${pathToStorage}/${fileName}`;
     console.log(`Creating ${fullPath}`);
 
-    fs.appendFile(fullPath, '', (err) => {
-      if (err) {
-        logsHandler(io, {
-          type: 'error',
-          message: `File ${fileName} was not created.`,
-        });
-      } else {
-        logsHandler(io, {
-          type: 'success',
-          message: `File ${fileName} was created.`,
-        });
-      }
+    try {
+      fs.writeFileSync(fullPath, '');
 
+      logsHandler(io, {
+        type: 'success',
+        message: `File ${fileName} was created.`,
+      });
+    } catch (error) {
+      logsHandler(io, {
+        type: 'error',
+        message: `File ${fileName} was not created.`,
+      });
+    } finally {
       optionsHandler(io);
-    });
+    }
   });
 };
