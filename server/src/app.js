@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 /* Dependencies */
 const express = require('express');
 
@@ -45,6 +43,6 @@ app.all('*', (req, res) => {
   res.status(404).send({ success: false, code: '404' });
 });
 
-http.listen(process.env.PORT, process.env.HOST, async () => {
-  console.log(`Server started on  ${process.env.HOST}:${process.env.PORT}`);
+http.listen(3000, 'localhost', async () => {
+  console.log(`Server started on localhost:3000`);
 });
