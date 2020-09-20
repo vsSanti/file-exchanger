@@ -1,25 +1,16 @@
-const readline = require('readline');
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false,
-});
-
-module.exports = (socket) => {
+module.exports = (socket, readLine) => {
   socket.on('options', (msg) => {
-    rl.question(msg, (answer) => {
-      const splittedAnswer = answer.split(' ');
-
-      switch (splittedAnswer[0]) {
+    readLine.question(msg, (answer) => {
+      switch (answer) {
         case '1':
-          socket.emit('create-file', splittedAnswer[1]);
+          socket.emit('create-file-solicitation');
+          break;
+        case '2':
+          socket.emit('read-file-solicitation');
           break;
         default:
           break;
       }
-
-      rl.close();
     });
   });
 };

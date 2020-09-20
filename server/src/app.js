@@ -18,9 +18,10 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 /* Handlers */
-const chatHandler = require('./handlers/socket/chat');
 const createFileHandler = require('./handlers/socket/createFile');
+const readFileHandler = require('./handlers/socket/readFile');
 const optionsHandler = require('./handlers/socket/options');
+const errorHandler = require('./handlers/socket/error');
 
 /* Socket.IO */
 io.on('connection', (socket) => {
@@ -29,8 +30,9 @@ io.on('connection', (socket) => {
 
   optionsHandler(io);
 
-  chatHandler(socket, io);
+  errorHandler(socket, io);
   createFileHandler(socket, io);
+  readFileHandler(socket, io);
 });
 
 /* Log errors */
