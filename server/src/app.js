@@ -2,16 +2,12 @@ require('dotenv').config();
 
 /* Dependencies */
 const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
 
 /* Express initialization */
 const app = express();
 
 /* Expres utilities */
 app.use(express.json());
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Socket.IO initialization */
 const http = require('http').Server(app);
