@@ -1,4 +1,4 @@
-const optionsMessage = require('../../utills/optionsMessage');
+const optionsMessage = require('../../utils/optionsMessage');
 
 module.exports = (io) => {
   io.emit('options', optionsMessage);

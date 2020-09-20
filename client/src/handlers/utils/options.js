@@ -8,10 +8,8 @@ module.exports = (socket, readLine) => {
         case '2':
           socket.emit('read-file-solicitation');
           break;
-        case '4':
-          socket.emit('terminate-connection-solicitation');
-          break;
         default:
+          socket.emit('terminate-connection-solicitation');
           break;
       }
     });

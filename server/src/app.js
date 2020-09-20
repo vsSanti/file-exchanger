@@ -14,12 +14,17 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 /* Handlers */
-const createFileHandler = require('./handlers/socket/createFile');
-const errorHandler = require('./handlers/socket/error');
-const optionsHandler = require('./handlers/socket/options');
-const readFileHandler = require('./handlers/socket/readFile');
-const terminateConnectionHandler = require('./handlers/socket/terminateConnection');
-const updateFileHandler = require('./handlers/socket/updateFile');
+const {
+  createFileHandler,
+  readFileHandler,
+  updateFileHandler,
+} = require('./handlers/file');
+
+const {
+  errorHandler,
+  optionsHandler,
+  terminateConnectionHandler,
+} = require('./handlers/utils');
 
 /* Socket.IO */
 io.on('connection', (socket) => {
@@ -27,12 +32,12 @@ io.on('connection', (socket) => {
   console.log(`Connected! ip:port = ${conn.remoteAddress}:${conn.remotePort}`);
 
   optionsHandler(io);
-
   errorHandler(socket, io);
+  terminateConnectionHandler(socket, io);
+
   createFileHandler(socket, io);
   readFileHandler(socket, io);
   updateFileHandler(socket, io);
-  terminateConnectionHandler(socket, io);
 });
 
 /* Log errors */

@@ -1,8 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const logsHandler = require('./logs');
-const optionsHandler = require('./options');
+const { logsHandler, optionsHandler } = require('../utils');
 
 const pathToStorage = path.join(__dirname, '..', '..', '..', 'storage');
 

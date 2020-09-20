@@ -1,11 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 
-const pathToTemp = path.join(__dirname, '..', '..', 'temp');
+const pathToTemp = path.join(__dirname, '..', '..', '..', 'temp');
 
 module.exports = (socket, rl) => {
   socket.on('read-file-solicitation', (originalFiles) => {
-    rl.question('Inform file index:\n', (answer) => {
+    rl.question('Inform file index: ', (answer) => {
       socket.emit('read-file', originalFiles[Number(answer) - 1]);
     });
   });

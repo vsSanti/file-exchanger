@@ -1,6 +1,13 @@
 const readline = require('readline');
 const io = require('socket.io-client');
 
+const { createFileHandler, readFileHandler } = require('./handlers/file');
+const {
+  logsHandler,
+  optionsHandler,
+  terminateConnectionHandler,
+} = require('./handlers/utils');
+
 const socket = io('http://localhost:3000');
 
 const rl = readline.createInterface({
@@ -9,16 +16,9 @@ const rl = readline.createInterface({
   terminal: false,
 });
 
-const createFileHandler = require('./handlers/createFile');
-const logsHandler = require('./handlers/logs');
-const optionsHandler = require('./handlers/options');
-const readFileHandler = require('./handlers/readFile');
-const terminateConnectionHandler = require('./handlers/terminateConnection');
-
 logsHandler(socket);
-
 optionsHandler(socket, rl);
+terminateConnectionHandler(socket);
+
 createFileHandler(socket, rl);
 readFileHandler(socket, rl);
-
-terminateConnectionHandler(socket);
