@@ -20,7 +20,7 @@ module.exports = (socket, rl) => {
       return;
     }
 
-    rl.question('Type anything to send file back', () => {
+    rl.question('Type anything to send file back: ', () => {
       try {
         const buffer = fs.readFileSync(fullPath, 'utf8');
         fs.unlinkSync(fullPath);

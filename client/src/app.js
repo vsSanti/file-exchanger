@@ -9,13 +9,16 @@ const rl = readline.createInterface({
   terminal: false,
 });
 
-const optionsHandler = require('./handlers/options');
-const logsHandler = require('./handlers/logs');
 const createFileHandler = require('./handlers/createFile');
+const logsHandler = require('./handlers/logs');
+const optionsHandler = require('./handlers/options');
 const readFileHandler = require('./handlers/readFile');
+const terminateConnectionHandler = require('./handlers/terminateConnection');
 
 logsHandler(socket);
 
 optionsHandler(socket, rl);
 createFileHandler(socket, rl);
 readFileHandler(socket, rl);
+
+terminateConnectionHandler(socket);

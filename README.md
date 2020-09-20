@@ -9,4 +9,4 @@ O projeto deve possuir as seguintes características:
 - [x] Devolver arquivo para o servidor por solicitação do cliente;
 - [ ] Imprimir arquivo no cliente;
 - [ ] Fechar arquivo no servidor quando cliente solicitar, e enviar mensagem informando o cliente do fechamento;
-- [ ] Finalizar cliente e servidor.
+- [x] Finalizar cliente e servidor.

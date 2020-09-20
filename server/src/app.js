@@ -15,10 +15,11 @@ const io = require('socket.io')(http);
 
 /* Handlers */
 const createFileHandler = require('./handlers/socket/createFile');
-const readFileHandler = require('./handlers/socket/readFile');
-const updateFileHandler = require('./handlers/socket/updateFile');
-const optionsHandler = require('./handlers/socket/options');
 const errorHandler = require('./handlers/socket/error');
+const optionsHandler = require('./handlers/socket/options');
+const readFileHandler = require('./handlers/socket/readFile');
+const terminateConnectionHandler = require('./handlers/socket/terminateConnection');
+const updateFileHandler = require('./handlers/socket/updateFile');
 
 /* Socket.IO */
 io.on('connection', (socket) => {
@@ -31,6 +32,7 @@ io.on('connection', (socket) => {
   createFileHandler(socket, io);
   readFileHandler(socket, io);
   updateFileHandler(socket, io);
+  terminateConnectionHandler(socket, io);
 });
 
 /* Log errors */
